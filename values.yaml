@@ -5,8 +5,9 @@ metadata:
   labels:
     app: web
     env: production
-Replicas: 2
+
 spec:
+  Replicas: 2
   containers:
   - name: nginx-container
     image: nginx:latest
