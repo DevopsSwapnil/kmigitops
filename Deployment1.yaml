@@ -5,7 +5,7 @@ metadata:
   labels:
     environment: development
     app: web-app
---
+--- # CORRECT separator
 apiVersion: v1
 kind: ResourceQuota
 metadata:
@@ -16,13 +16,16 @@ spec:
     # Compute Limits
     limits.cpu: "2"           # Total CPU limit for all containers: 2 CPU cores
     limits.memory: "4Gi"      # Total memory limit for all containers: 4 GiB
+    # ADDED: Resource Requests Quota - Highly Recommended for comprehensive quota management
+    requests.cpu: "1"         # Total CPU request for all containers: 1 CPU core
+    requests.memory: "2Gi"    # Total memory request for all containers: 2 GiB
     pods: "10"                # Max number of Pods allowed in the namespace
     
     # Ephemeral Storage Quota (This satisfies the 5GB request)
     # This limits the total combined usage of emptyDir volumes and container writable layers.
-    limits.ephemeral-storage: "5Gi" 
-
-----
+    limits.ephemeral-storage: "5Gi"
+    requests.ephemeral-storage: "2Gi" # ADDED: Ephemeral storage requests quota
+--- # CORRECT separator
 apiVersion: v1
 kind: LimitRange
 metadata:
@@ -31,15 +34,15 @@ metadata:
 spec:
   limits:
   - default:
-      cpu: 500m               # Default CPU limit per container
-      memory: 512Mi           # Default memory limit per container
-      ephemeral-storage: 1Gi  # Default ephemeral storage limit per container
+      cpu: 500m                  # Default CPU limit per container
+      memory: 512Mi              # Default memory limit per container
+      ephemeral-storage: 1Gi     # Default ephemeral storage limit per container
     defaultRequest:
-      cpu: 100m               # Default CPU request per container
-      memory: 128Mi           # Default memory request per container
-      ephemeral-storage: 500Mi # Default ephemeral storage request per container
+      cpu: 100m                  # Default CPU request per container
+      memory: 128Mi              # Default memory request per container
+      ephemeral-storage: 500Mi   # Default ephemeral storage request per container
     type: Container
----
+--- # CORRECT separator
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -63,8 +66,8 @@ spec:
         ports:
         - containerPort: 80
         volumeMounts:
-        - name: app-cache         # Mount the temporary volume
-          mountPath: /tmp/cache   # Path where the volume will be accessible inside the container
+        - name: app-cache
+          mountPath: /tmp/cache
         resources:
           limits:
             cpu: 500m
@@ -77,10 +80,11 @@ spec:
             ephemeral-storage: 500Mi
       volumes:
       - name: app-cache
-        # Defines the emptyDir volume. This volume is created when the Pod starts
-        # and deleted when the Pod is removed (ephemeral).
+        # Defines the emptyDir volume.
+        # It's an emptyDir *without* a size limit, so the quota/limitrange
+        # on 'ephemeral-storage' will govern its usage, which is fine.
         emptyDir: {}
-___
+--- # CORRECT separator
 apiVersion: v1
 kind: Service
 metadata:
@@ -96,6 +100,4 @@ spec:
       port: 80
       targetPort: 80
   # ClusterIP exposes the service internally within the cluster
-  type: ClusterIP 
-
---
+  type: ClusterIP
