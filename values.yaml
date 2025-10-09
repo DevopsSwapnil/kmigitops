@@ -2,6 +2,7 @@ apiVersion: v1
 kind: Pod
 metadata:
   name: nginx-web-pod
+  namespace: default  # Explicitly setting the namespace
   labels:
     app: web
     env: production
