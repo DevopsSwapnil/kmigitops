@@ -1,33 +1,10 @@
 apiVersion: v1
 kind: Pod
 metadata:
-  name: nginx-web-pod
-  namespace: default  # Explicitly setting the namespace
-  labels:
-    app: web
-    env: production
-
+  name: nginx-pod
 spec:
-  volumes:
-  - name: shared-data
-    emptyDir: {}
-
   containers:
-  - name: nginx-container
+  - name: nginx
     image: nginx:latest
     ports:
     - containerPort: 80
-    volumeMounts:
-    - name: shared-data
-      mountPath: /usr/share/nginx/html
-
-  - name: writer-container
-    image: debian
-    volumeMounts:
-    - name: shared-data
-      mountPath: /pod-data
-    command: ["/bin/sh", "-c"]
-    args:
-    - |
-      echo "<h1>Hello from the Writer Sidecar!</h1>" > /pod-data/index.html
-      sleep 3600
