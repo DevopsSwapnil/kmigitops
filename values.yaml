@@ -7,34 +7,26 @@ metadata:
     env: production
 
 spec:
-  Replicas: 2
+  volumes:
+  - name: shared-data
+    emptyDir: {}
+
   containers:
   - name: nginx-container
     image: nginx:latest
     ports:
     - containerPort: 80
-  # 1. Define a shared volume
-  volumes:
-  - name: shared-data
-    emptyDir: {} # A temporary volume that exists as long as the Pod does
-
-  # 2. Define the containers (at least two)
-  containers:
-  - name: nginx-container # The main application container
-    image: nginx
-    ports:
-    - containerPort: 80
     volumeMounts:
     - name: shared-data
-      mountPath: /usr/share/nginx/html # Nginx's default content root
+      mountPath: /usr/share/nginx/html
 
-  - name: writer-container # The sidecar/helper container
+  - name: writer-container
     image: debian
     volumeMounts:
     - name: shared-data
-      mountPath: /pod-data # The path where the writer container will access the volume
+      mountPath: /pod-data
     command: ["/bin/sh", "-c"]
     args:
     - |
       echo "<h1>Hello from the Writer Sidecar!</h1>" > /pod-data/index.html
-      sleep 3600 # Keep the container running
+      sleep 3600
