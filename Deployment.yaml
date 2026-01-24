@@ -46,7 +46,7 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: simple-webapp-deployment
+  name: simple-webapp-deployment123456
   namespace: web-app-project
   labels:
     app: simple-webapp
