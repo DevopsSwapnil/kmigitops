@@ -1,11 +1,7 @@
 apiVersion: v1
 kind: Namespace
 metadata:
-<<<<<<< HEAD
   name: web-app-project1
-=======
-  name: web-app-project3
->>>>>>> main
   labels:
     environment: development
     app: web-app
@@ -13,11 +9,7 @@ metadata:
 apiVersion: v1
 kind: ResourceQuota
 metadata:
-<<<<<<< HEAD
   name: project-quota1
-=======
-  name: project-quota3
->>>>>>> main
   namespace: web-app-project
 spec:
   hard:
