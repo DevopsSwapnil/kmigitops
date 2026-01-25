@@ -1,7 +1,6 @@
 apiVersion: v1
 kind: Namespace
-metadata:
-  name: web-app-project4
+  name: web-app-project3033445
   labels:
     environment: development
     app: web-app
@@ -9,7 +8,7 @@ metadata:
 apiVersion: v1
 kind: ResourceQuota
 metadata:
-  name: project-quota4
+  name: project-quota303333
   namespace: web-app-project
 spec:
   hard:
@@ -33,7 +32,7 @@ metadata:
   namespace: web-app-project
 spec:
   limits:
-  - default:
+  - default:477
       cpu: 500m                  # Default CPU limit per container
       memory: 512Mi              # Default memory limit per container
       ephemeral-storage: 1Gi     # Default ephemeral storage limit per container
@@ -46,7 +45,7 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: simple-webapp-deployment
+  name: simple-webapp-deployment123456
   namespace: web-app-project
   labels:
     app: simple-webapp
