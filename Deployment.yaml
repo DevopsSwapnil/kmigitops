@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Namespace
-metadata:
-  name: web-app-project3033333
+metadata
+  name: web-app-project3033445
   labels:
     environment: development
     app: web-app
@@ -33,7 +33,7 @@ metadata:
   namespace: web-app-project
 spec:
   limits:
-  - default:
+  - default:477
       cpu: 500m                  # Default CPU limit per container
       memory: 512Mi              # Default memory limit per container
       ephemeral-storage: 1Gi     # Default ephemeral storage limit per container
