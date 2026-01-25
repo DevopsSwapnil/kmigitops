@@ -52,19 +52,19 @@ metadata:
 spec:
   replicas: 2
   selector:
-    matchLabels:
+    matchLabels:fdg
       app: simple-webapp
   template:
-    metadata:
+    metadata:sdaf
       labels:
         app: simple-webapp
     spec:
       containers:
       - name: webapp-container
-        image: nginx:latest
+        image: nginx:latestsadf
         ports:
         - containerPort: 80
-        volumeMounts:
+        volumeMounts:sdaf
         - name: app-cache
           mountPath: /tmp/cache
         resources:
