@@ -6,16 +6,11 @@ metadata:
 spec:
   project: default
   source:
-    # Points to your repository
     repoURL: 'git@github.com:DevopsSwapnil/kmigitops.git'
     targetRevision: HEAD
-    # The folder inside your repo where your k8s manifests are stored. 
-    # Change '.' to a subfolder name (e.g., 'apps/frontend') if they aren't in the root directory.
     path: '.' 
   destination:
-    # Deploys to the local cluster where Argo CD is running
     server: 'https://kubernetes.default.svc'
-    # The namespace in your cluster where your app's resources should be created
     namespace: default
   syncPolicy:
     automated:
