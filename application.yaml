@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: kmigitops-app-1
+  name: kmigitops-app-2
   namespace: argocd
 spec:
   project: default
